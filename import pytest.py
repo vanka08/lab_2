@@ -1,33 +1,48 @@
 import pytest
 import math
 
-
-def factorial_math(n):
-    if n < 0:
-        raise ValueError("Факториал не определен для отрицательных чисел.")
-    else:
-        return math.factorial(n)
-
-
-def test_factorial_zero():
-    assert factorial_math(0) == 1
+def is_prime(n):
+    """Проверяет, является ли число простым."""
+    if n <= 1:
+        return False
+    for i in range(2, int(math.sqrt(n)) + 1):
+        if n % i == 0:
+            return False
+    return True
 
 
-def test_factorial_one():
-    assert factorial_math(1) == 1
+def test_prime_true():
+    assert is_prime(2) == True
+    assert is_prime(3) == True
+    assert is_prime(5) == True
+    assert is_prime(7) == True
+    assert is_prime(11) == True
+    assert is_prime(13) == True
+    assert is_prime(17) == True
+    assert is_prime(19) == True
+    assert is_prime(23) == True
+    assert is_prime(29) == True
 
 
-def test_factorial_positive():
-    assert factorial_math(5) == 120
-    assert factorial_math(10) == 3628800
+def test_prime_false():
+    assert is_prime(1) == False
+    assert is_prime(4) == False
+    assert is_prime(6) == False
+    assert is_prime(8) == False
+    assert is_prime(9) == False
+    assert is_prime(10) == False
+    assert is_prime(12) == False
+    assert is_prime(14) == False
+    assert is_prime(15) == False
+    assert is_prime(16) == False
 
 
-def test_factorial_negative():
-    with pytest.raises(ValueError):
-        factorial_math(-1)
+def test_prime_negative():
+    assert is_prime(-1) == False
+    assert is_prime(-5) == False
 
 
-def test_factorial_large():
-    assert factorial_math(20) == 2432902008176640000
-
+def test_prime_large():
+    assert is_prime(997) == True # Большое простое число
+    assert is_prime(1000) == False # Большое составное число
 
